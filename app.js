@@ -2,6 +2,8 @@ const http = require("http");
 const fs = require("fs");
 const url = require("url");
 
+const fillTemplateHandler = require("./modules/fillTemplate");
+
 const tempOverview = fs.readFileSync(`${__dirname}/templates/template-overview.html`, "utf-8");
 const tempProd = fs.readFileSync(`${__dirname}/templates/template-product.html`, "utf-8");
 const tempCard = fs.readFileSync(`${__dirname}/templates/template-card.html`, "utf-8");
@@ -9,18 +11,6 @@ const tempCard = fs.readFileSync(`${__dirname}/templates/template-card.html`, "u
 const appData = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
 const parsedAppData = JSON.parse(appData);
 
-const fillTemplateHandler = function (temp, data){
-    let output = temp.replace(/{% PRODUCT_TITLE %}/g, data.productName);
-    output = output.replace(/{% PRODUCT_IMAGE %}/g, data.image);
-    output = output.replace(/{% PRODUCT_FROM %}/g, data.from);
-    output = output.replace(/{% PRODUCT_NUTR %}/g, data.nutrients);
-    output = output.replace(/{% PRODUCT_QTY %}/g, data.quantity);
-    output = output.replace(/{% PRODUCT_PRICE %}/g, data.price);
-    output = output.replace(/{% PRODUCT_DESC %}/g, data.description);
-    output = output.replace(/{% PRODUCT_ID %}/g, data.id);
-    output = data.organic ? output : output.replace(/{% NOT_ORGANIC %}/g, "not-organic");
-    return output;
-}
 
 const requestHandler = function(req, res){
     res.setHeader("Content-Type", "text/html");
