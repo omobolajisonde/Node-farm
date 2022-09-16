@@ -39,7 +39,7 @@ const requestHandler = function (req, res) {
     res.writeHead(404, "Not Found", {
       "Content-Type": "text/html",
     });
-    // res.end("<h1>Page not found</h1>");
+    res.end("<h1>Page not found</h1>");
   }
 };
 
